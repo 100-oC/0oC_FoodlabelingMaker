@@ -13,7 +13,37 @@
     <body>
         <!--ここに中身-->
         <h1>食品表示画像メーカー</h1>
-        <input type="text">
-        <button>発行</button>
+        
+        <!--入力欄-->
+        <!--線を入れておく-->
+        <hr>
+        <p><!--名称-->
+            <big><b>①名称</b></big><br>
+            <small>　作品のタイトルを入力してください</small><br>
+            <input type="text" id="title">
+        </p>
+        <p><!--原材料名-->
+            <big><b>②原材料名</b></big><br>
+            <small>　注意事項などリストとして表示しておきたいものを入力してください<br>　（一項目ごとに改行で区切ってください）</small><br>
+            <textarea id="ingredients"></textarea>
+        </p>
+        <p><!--内容物-->
+            <big><b>③内容物</b></big><br>
+            <small>　枚数やページ数を入力してください</small><br>
+            <input type="text" id="contentsSize">
+        </p>
+        <p><!--製造者-->
+            <big><b>④製造者</b></big><br>
+            <small>　作成者の名前を入力してください</small><br>
+            <input type="text" id="userName">
+        </p>
+        <hr>
+ 
+        <!--描画領域-->
+        <canvas id="preview"></canvas>
+        <hr>
+
+        <!--完成ボタン-->
+        <button id="generateButton">発行</button>
     </body>
 </html>
