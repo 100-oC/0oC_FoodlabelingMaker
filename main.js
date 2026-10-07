@@ -26,8 +26,8 @@ ImageScale.addEventListener("input", function()
     scaleY=CanvasSizeY*ImageScale.value;
     ImageScaleText.textContent =scaleX + " × " + scaleY;
 
-    Canvas.width = scaleX+20;
-    Canvas.height = scaleY+20;
+    Canvas.width = scaleX+CanvasSpace+CanvasSpace;
+    Canvas.height = scaleY+CanvasSpace+CanvasSpace;
 
     // キャンバス内の倍率設定
     Draw(ImageScale.value);
