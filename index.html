@@ -27,8 +27,8 @@
             <small>　注意事項などリストとして表示しておきたいものを入力してください<br>　（一項目ごとに改行で区切ってください）</small><br>
             <textarea id="ingredients"></textarea>
         </p>
-        <p><!--内容物-->
-            <big><b>③内容物</b></big><br>
+        <p><!--内容量-->
+            <big><b>③内容量</b></big><br>
             <small>　枚数やページ数を入力してください</small><br>
             <input type="text" id="contentsSize">
         </p>
@@ -40,10 +40,18 @@
         <hr>
  
         <!--描画領域-->
-        <canvas id="preview"></canvas>
+        <canvas id="preview" width="610" height="410"></canvas>
         <hr>
 
+        <p><!--出力サイズ-->
+            <big><b>画像サイズ</b></big><br>
+            <small>　画像の倍率を選択してください</small><br>
+            <input type="range" id="imageScale" min="0.5" max="2" step="0.1" value="1">
+            <small>画像サイズ：<span id="scaleText">600 × 400</span></small>
+        </p>
         <!--完成ボタン-->
         <button id="generateButton">発行</button>
+
+        <script src="main.js"></script>
     </body>
 </html>
