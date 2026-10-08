@@ -49,11 +49,17 @@
             <input type="range" id="imageScale" min="0.5" max="2" step="0.1" value="1">
             <small>画像サイズ：<span id="scaleText">600 × 400</span></small>
         </p>
+
         <!--完成ボタン-->
         <button id="generateButton">発行</button>
+        <hr>
 
-        <img id="resultImage">
-
+        <!--保存領域-->
+        <div id="resultOverlay">
+            <img id="resultImage"><br>
+            <button id="imageCancel">✕</button>
+        </div>
+        
         <script src="main.js"></script>
     </body>
 </html>

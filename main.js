@@ -11,12 +11,66 @@ const GenerateButton    =document.getElementById("generateButton");
 // キャンバスを取得
 const Canvas            =document.getElementById("preview");
 const Ctx               =Canvas.getContext("2d");
+// 完成描画領域
+const Overlay           =document.getElementById("resultOverlay");
+const ResultImage       =document.getElementById("resultImage");
+const ImageCancel       =document.getElementById("imageCancel");
 
 // キャンバス関係サイズの初期値
 const CanvasSpace       =10;    //　描画開始地点までの距離
 const CanvasSizeX       =600;
 const CanvasSizeY       =400;
 const ContentsFontSize  =24;    // 「名称」など見出しのフォントサイズ
+
+// タイトル入力
+TitleInput.addEventListener("input",function(){Draw(ImageScale.value);});
+// 内容量入力
+ContentsSizeInput.addEventListener("input",function(){Draw(ImageScale.value);});
+// 製造者入力
+UserNameInput.addEventListener("input",function(){Draw(ImageScale.value);});
+// 原材料名
+IngredientsList.addEventListener("input",function(){Draw(ImageScale.value);});
+// 原材料名を改行
+function DrawIngredientsList()
+{
+    // 改行で区切る
+    const lines =IngredientsList.value.split("\n");
+    ingredientsString=lines.join("、");
+
+    // 文字列を改行編集
+    const string= StringBr(ingredientsString);
+    for(let i=0;i<string.length;i++)
+    {
+        Ctx.fillText(string[i], 
+            CanvasSpace + 125*ImageScale.value, 
+            CanvasSpace + (85+ContentsFontSize*i)*ImageScale.value);
+    }
+}
+
+// 文字列を一定の流さで改行
+function StringBr(string)
+{
+    const lines=[];
+    let line="";
+    for(const char of string)
+    {
+        line+=char;
+
+        // 改行を入れる
+        if(Ctx.measureText(line).width>450*ImageScale.value)
+        {
+            lines.push(line);
+            line="";
+        }
+    }
+
+    if (line !== "") 
+    {
+        lines.push(line);
+    }  
+
+    return lines;
+}
 
 // 倍率の変更
 Draw();
@@ -53,24 +107,31 @@ function Draw(scale=1.0)
 
     Ctx.fillText("名　　称", 
         CanvasSpace + 10*scale, CanvasSpace + 35*scale);
+     Ctx.fillText(TitleInput.value, 
+        CanvasSpace + 125*ImageScale.value, CanvasSpace + 35*ImageScale.value);
     DrawLine(
         CanvasSpace, CanvasSpace + 50 * scale,
         CanvasSpace + CanvasSizeX * scale, CanvasSpace + 50*scale);
 
     Ctx.fillText("原材料名", 
         CanvasSpace + 10*scale, CanvasSpace + 85*scale);
+    DrawIngredientsList();
     DrawLine(
         CanvasSpace, CanvasSpace + (100 + 200) * scale,
         CanvasSpace + CanvasSizeX * scale, CanvasSpace + (100 + 200)*scale);
 
     Ctx.fillText(" 内 容 量", 
         CanvasSpace + 10*scale, CanvasSpace + (133 + 200)*scale);
+    Ctx.fillText(ContentsSizeInput.value, 
+        CanvasSpace + 125*scale, CanvasSpace + (133 + 200)*scale);
     DrawLine(
         CanvasSpace, CanvasSpace + (150 + 200) * scale,
         CanvasSpace + CanvasSizeX * scale, CanvasSpace + (150 + 200)*scale);
 
     Ctx.fillText(" 製 造 者", 
         CanvasSpace + 10*scale, CanvasSpace + (185 + 200)*scale);
+    Ctx.fillText(UserNameInput.value, 
+        CanvasSpace + 125*scale, CanvasSpace + (185 + 200)*scale);
 
     DrawLine(
         CanvasSpace + 115*scale, CanvasSpace,
@@ -87,24 +148,17 @@ function DrawLine(StartX,StartY,EndX,EndY)
 }
 
 // 発行ボタンが押された際のイベント
-const resultImage = document.getElementById("resultImage");
 GenerateButton.addEventListener("click",function()
 {
-    // console.log(TitleInput.value);
-
-    // 画像を保存できるようにする
-    // const image = Canvas.toDataURL("image/png");
-
-    // // 一時リンクの作成
-    // const Link = document.createElement("a");
-    // Link.href = image;
-    // // TODO:画像名を設定できるようにする
-    // // TODO:現状ダウンロードページに飛ぶため画像のみ表示し、保存できるようにする
-    // Link.download = "食品表示画像.png"
-
-    // Link.click();
-
+    // 画像を書き出し
+    Overlay.style.display = "flex";
     const image = Canvas.toDataURL("image/png");
-
-    resultImage.src = image;
+    ResultImage.src = image;
 });
+
+// オーバーレイ表示中のボタンを押した際のイベント
+ImageCancel.addEventListener("click",function()
+{
+    // オーバーレイを消す
+    Overlay.style.display = "none";
+})
