@@ -87,19 +87,24 @@ function DrawLine(StartX,StartY,EndX,EndY)
 }
 
 // 発行ボタンが押された際のイベント
+const resultImage = document.getElementById("resultImage");
 GenerateButton.addEventListener("click",function()
 {
     // console.log(TitleInput.value);
 
     // 画像を保存できるようにする
+    // const image = Canvas.toDataURL("image/png");
+
+    // // 一時リンクの作成
+    // const Link = document.createElement("a");
+    // Link.href = image;
+    // // TODO:画像名を設定できるようにする
+    // // TODO:現状ダウンロードページに飛ぶため画像のみ表示し、保存できるようにする
+    // Link.download = "食品表示画像.png"
+
+    // Link.click();
+
     const image = Canvas.toDataURL("image/png");
 
-    // 一時リンクの作成
-    const Link = document.createElement("a");
-    Link.href = image;
-    // TODO:画像名を設定できるようにする
-    // TODO:現状ダウンロードページに飛ぶため画像のみ表示し、保存できるようにする
-    Link.download = "食品表示画像.png"
-
-    Link.click();
+    resultImage.src = image;
 });
